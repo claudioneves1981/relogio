@@ -2,33 +2,13 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.time.Instant;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.Date;
-import java.util.Map;
-import java.util.Random;
 
-//TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
-// click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
 public class Main {
 
     private static final Color On = Color.RED;
-    private static final Color Off = Color.CYAN;
     private static final JFrame frame = new JFrame("Relógio");
     private static final JPanel panel = new JPanel();
-    private static final Color[][]  digitColors ={{On},
-            {On},
-            {On},
-            {On},
-            {On},
-            {On},
-            {On},
-            {On},
-            {On},
-            {On}
-    };
-
 
 
     public static void main(String[] args) {
@@ -42,14 +22,14 @@ public class Main {
         frame.add(panel);
         frame.setVisible(true);
 
-        JLabel H1Segments = Create7Segment();
-        JLabel H2Segments = Create7Segment();
-        //AddColon();
-        JLabel M1Segments = Create7Segment();
-        JLabel M2Segments = Create7Segment();
-        //AddColon();
-        JLabel S1Segments = Create7Segment();
-        JLabel S2Segments = Create7Segment();
+        JLabel H1 = GenerateLabel();
+        JLabel H2 = GenerateLabel();
+        JLabel Colon1 = new JLabel(":");
+        JLabel M1 = GenerateLabel();
+        JLabel M2 = GenerateLabel();
+        JLabel Colon2 = new JLabel(":");
+        JLabel S1 = GenerateLabel();
+        JLabel S2 = GenerateLabel();
 
 
        Timer swingTimer = new Timer(1000, new ActionListener() {
@@ -67,14 +47,14 @@ public class Main {
                 int m2 = m % 10;
                 int s1 = s / 10;
                 int s2 = s % 10;
-                DisplayDigit(H1Segments, h1);
-                DisplayDigit(H2Segments, h2);
-                //AddColon();
-                DisplayDigit(M1Segments, m1);
-                DisplayDigit(M2Segments, m2);
-                //AddColon();
-                DisplayDigit(S1Segments, s1);
-                DisplayDigit(S2Segments, s2);
+                DisplayDigit(H1, h1);
+                DisplayDigit(H2, h2);
+                AddColon(Colon1);
+                DisplayDigit(M1, m1);
+                DisplayDigit(M2, m2);
+                AddColon(Colon2);
+                DisplayDigit(S1, s1);
+                DisplayDigit(S2, s2);
 
             }
         });
@@ -83,7 +63,7 @@ public class Main {
 
     }
 
-    public static JLabel Create7Segment() {
+    public static JLabel GenerateLabel() {
 
         JLabel segment = new JLabel();
         segment.setBackground(On);
@@ -93,18 +73,16 @@ public class Main {
     }
 
    public static void DisplayDigit(JLabel segment, int digit) {
-       var lit = digitColors[digit];
-       for (int j = 0;j<1; j++){
+
            segment.setText(String.valueOf(digit));
            segment.setFont(new Font("Tahoma",Font.BOLD,100));
-           segment.setForeground(lit[j]);
+           segment.setForeground(On);
            panel.add(segment);
-      }
+
    }
 
-    public static void AddColon() {
+    public static void AddColon(JLabel dot1) {
 
-        JLabel dot1 = new JLabel(":");
         dot1.setFont(new Font("Tahoma",Font.BOLD,100));
         dot1.setForeground(On);
         panel.add(dot1);
